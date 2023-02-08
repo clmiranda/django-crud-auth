@@ -1,0 +1,37 @@
+{% extends 'base.html' %} {% block content %}
+<main class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <h1 class="text-center my-3 display-5">Tareas {{typeTask}}</h1>
+      {% if tasks %}
+      <ul class="list-group my-3">
+        {% for task in tasks %}
+        <a
+          class="list-group-item list-group-item-action {% if task.important %} list-group-item-warning {% endif %} py-3"
+          href="{% url 'task_detail' task.id %}"
+        >
+          <header class="d-flex justify-content-between">
+            <h5><strong>{{task.title|title}}</strong></h5>
+            <p class="mb-2">
+              {% if task.important %}
+              <i class="bi bi-star-fill"></i>
+              {% endif %}
+              <strong>{{task.user.username}}</strong>
+            </p>
+          </header>
+          <p class="mb-2"><strong>Descripción: </strong>{{task.description}}</p>
+          {% if task.dateCompleted %}
+          <p class="mb-0">
+            <strong>Fecha Completada: </strong>{{task.dateCompleted|date:'d/m/Y H:i:s'}}
+          </p>
+          {% endif %}
+        </a>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <h1 class="display-1 text-center mt-5">No tiene tareas {{ typeTask }}</h1>
+      {% endif %}
+    </div>
+  </div>
+</main>
+{% endblock %}

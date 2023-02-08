@@ -1,0 +1,62 @@
+{% extends 'base.html' %} {% block content %}
+
+<main class="container mt-5">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <form action="/signup/" method="post" class="card card-body p-3 p-sm-5">
+        <h1 class="text-center">Registrar Usuario</h1>
+        {% if error %}
+        <script>
+          let messageError = "{{ error }}";
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "bottom-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: "error",
+            title: messageError,
+          });
+        </script>
+        {% endif %} {% csrf_token %}
+        <div class="mb-3">
+          <label for="username">Nombre de Usuario:</label>
+          <input
+            type="text"
+            name="username"
+            class="form-control"
+            placeholder="Ingresa tu Nombre de Usuario"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="password1">Contraseña:</label>
+          <input
+            type="password"
+            name="password1"
+            class="form-control"
+            placeholder="Ingresa tu Contraseña"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="password2">Confirmar Contraseña:</label>
+          <input
+            type="password"
+            name="password2"
+            class="form-control"
+            placeholder="Confirma tu Contraseña"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Registrar</button>
+        <a href="/signin/" class="text-center mt-3">Iniciar Sesión </a>
+      </form>
+    </div>
+  </div>
+</main>
+{% endblock %}

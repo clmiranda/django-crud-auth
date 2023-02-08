@@ -1,0 +1,52 @@
+{% extends 'base.html' %} {% block content %}
+<main class="container">
+  <div class="row mt-3">
+    <div class="col-md-8 offset-md-2">
+      <form method="post" class="card card-body my-3 p-3 p-sm-4">
+        <h1 class="mb-3">{{task.title|title}}</h1>
+        {% csrf_token %} {{form.as_p}}
+        <button class="btn btn-primary">Guardar Cambios</button>
+      </form>
+      <div class="my-3 text-center d-sm-flex justify-content-between">
+        {% if not task.dateCompleted %}
+        <form
+          class="mb-3"
+          action="{% url 'complete_task' task.id %}"
+          method="post"
+        >
+          {% csrf_token %}
+          <button class="btn btn-success">Marcar como Completada</button>
+        </form>
+        {% endif %}
+
+        <form
+          id="formDelete"
+          action="{% url 'delete_task' task.id %}"
+          method="post"
+        >
+          {% csrf_token %}
+          <button id="buttonCompleted" class="btn btn-danger">Eliminar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+  document.getElementById("buttonCompleted").addEventListener("click", (e) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "¿Estás seguro de eliminar la tarea?",
+      text: "No podras revertir los cambios!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.getElementById("formDelete").submit();
+      }
+    });
+  });
+</script>
+{% endblock %}

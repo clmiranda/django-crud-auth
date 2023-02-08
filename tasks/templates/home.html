@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% block content %}
+<main class="container mt-5">
+  <section class="card card-body p-5 text-center">
+    <h1 class="display-1">Aplicación Django</h1>
+    <p class="my-3 fs-4">
+      Aplicación desarrollada en el framework Django para administrar las tareas
+      a realizar por cada usuario, cada una puede ser establecida como
+      importante para darle una mayor prioridad.
+    </p>
+    {% if not user.is_authenticated %}
+    <div class="text-center my-3">
+      <a type="button" class="btn btn-primary" href="/signin">Iniciar Sesión</a>
+      <a type="button" class="btn btn-success" href="/signup">Registrarse</a>
+    </div>
+    {% endif %}
+  </section>
+</main>
+{% endblock %}
